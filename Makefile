@@ -50,6 +50,7 @@ $(COLLEEN): $(OBJ_DIR) $(OBJ_COLLEEN)
 
 $(GRACE): $(OBJ_DIR) $(OBJ_GRACE)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ_GRACE)
+	@touch Grace_kid.c
 	@echo "$(GREEN)$(GRACE) compiled$(RESET)"
 
 $(SULLY): $(OBJ_DIR) $(OBJ_SULLY)
@@ -62,23 +63,25 @@ $(OBJ_DIR)%.o: $(SRC_PATH)%.c
 
 test: test_colleen test_grace test_sully
 
-test_colleen: fclean $(COLLEEN)
+test_colleen: $(COLLEEN)
 	@bash ./test/test_colleen.sh
 
-test_grace: fclean $(GRACE)
-	@./$(GRACE)
+test_grace: $(GRACE)
+	@bash ./test/test_grace.sh
 
-test_sully: fclean $(SULLY)
+test_sully: $(SULLY)
 	@./$(SULLY)
+
+retest: fclean test
 
 clean:
 	@$(RM) $(OBJ_DIR)
 	@echo "$(RED)Objects removed$(RESET)"
 
 fclean: clean
-	@$(RM) $(COLLEEN) $(GRACE) $(SULLY)
+	@$(RM) $(COLLEEN) $(GRACE) $(SULLY) Grace_kid.c
 	@echo "$(RED)$(COLLEEN), $(GRACE) and $(SULLY) removed$(RESET)"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test test_colleen test_grace test_sully retest
