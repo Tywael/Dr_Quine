@@ -56,5 +56,8 @@ Colleen
 Grace
 Sully
 
-# Test files
+# Temp files
 Grace_kid.c
+tmp_Sully
+Sully_*
+./exe/

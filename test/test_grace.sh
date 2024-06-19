@@ -1,9 +1,11 @@
 #!/bin/bash
 
 # Test Colleen
+cd ./c/exe
+
 echo  -n "Test Grace:     "
 ./Grace
-diff Grace_kid.c ./c/Grace.c
+diff ./Grace_kid.c ../Grace.c
 if [ $? -eq 0 ]; then
     echo -e "\e[32mOK\e[0m"  # Green color for OK
 else
