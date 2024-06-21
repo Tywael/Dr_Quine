@@ -41,39 +41,38 @@ CUT 		= \033[K
 
 all: $(COLLEEN) $(GRACE) $(SULLY)
 
-$(OBJ_DIR):
-	@$(MKDIR) $@
-	@$(MKDIR) $(PROGRAM_DIR)
-	@cd $(PROGRAM_DIR)
+# Ensure directories are created as an order-only prerequisite for all targets that need them
+$(OBJ_DIR) $(PROGRAM_DIR):
+	@$(MKDIR) -p $@
+	@echo "$(GREEN)$@ created$(RESET)"
 
-$(COLLEEN): $(OBJ_DIR) $(OBJ_COLLEEN)
+# Adjusted rules for each program to ensure directories are checked/created before compiling
+$(COLLEEN): $(OBJ_COLLEEN) | $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ_COLLEEN)
 	@echo "$(GREEN)$(COLLEEN) compiled$(RESET)"
 
-$(GRACE): $(OBJ_DIR) $(OBJ_GRACE)
+$(GRACE): $(OBJ_GRACE) | $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ_GRACE)
 	@echo "$(GREEN)$(GRACE) compiled$(RESET)"
 
-$(SULLY): $(OBJ_DIR) $(OBJ_SULLY)
+$(SULLY): $(OBJ_SULLY) | $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ_SULLY)
 	@echo "$(GREEN)$(SULLY) compiled$(RESET)"
 
-$(OBJ_DIR)%.o: $(SRC_PATH)%.c
+# Adjusted rule for compiling .o files to ensure directories are checked/created before compiling
+$(OBJ_DIR)%.o: $(SRC_PATH)%.c | $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(CC) $(CFLAGS) -o $@ -c $<
 	@echo "$(CYAN)Compiling $<$(RESET)"
 
 test: test_colleen test_grace test_sully
 
 test_colleen: $(COLLEEN)
-	@cd $(PROGRAM_DIR)
 	@bash ./test/test_colleen.sh
 
 test_grace: $(GRACE)
-	@cd $(PROGRAM_DIR)
 	@bash ./test/test_grace.sh
 
 test_sully: $(SULLY)
-	@cd $(PROGRAM_DIR)
 	@bash ./test/test_sully.sh
 
 retest: fclean test
