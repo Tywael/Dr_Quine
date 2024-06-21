@@ -1,11 +1,17 @@
 #!/bin/bash
 
 # Test Colleen
-cd ./c/exe
+
+language="c"
+if [[ $1 = "ASM" || $1 = "s" ]]; then
+    language="s"
+fi
+
+cd ./exe
 
 echo  -n "Test Grace:     "
 ./Grace
-diff ./Grace_kid.c ../Grace.c
+diff ./Grace_kid.$language ./Grace_kid.$language
 if [ $? -eq 0 ]; then
     echo -e "\e[32mOK\e[0m"  # Green color for OK
 else

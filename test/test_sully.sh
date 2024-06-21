@@ -1,6 +1,11 @@
 #!/bin/bash
 
-ret="5c5
+language="c"
+if [[ $1 = "ASM" || $1 = "s" ]]; then
+    language="s"
+fi
+
+c_ret="5c5
 < int i = 4;
 ---
 > int i = 5;
@@ -20,16 +25,22 @@ ret="5c5
 < int i = 0;
 ---
 > int i = 5;"
+s_ret=""
 
 # Test Sully
-cd ./c/exe
+cd ./exe
 rm -f ./tmp_Sully
 ./Sully
 
 echo  -n "Test Sully:     "
 for i in {5..0}; do
-    diff ./Sully_$i.c ../Sully.c >> ./tmp_Sully
+    diff ./Sully_$i.$language ../Sully.$language >> ./tmp_Sully
 done
+if [[ $language = "s" ]]; then
+    ret=$s_ret
+else
+    ret=$c_ret
+fi
 diff ./tmp_Sully <(echo "$ret")
 if [ $? -eq 0 ]; then
     echo -e "\e[32mOK\e[0m"  # Green color for OK
