@@ -11,7 +11,7 @@ cd ./exe
 
 echo  -n "Test Grace:     "
 ./Grace
-diff ./Grace_kid.$language ./Grace_kid.$language
+diff ./Grace_kid.$language ../Grace.$language
 if [ $? -eq 0 ]; then
     echo -e "\e[32mOK\e[0m"  # Green color for OK
 else

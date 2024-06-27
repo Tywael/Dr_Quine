@@ -47,20 +47,25 @@ $(OBJ_DIR) $(PROGRAM_DIR):
 
 $(COLLEEN): $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(NA) $(NA_FLAGS) -o $(OBJ_COLLEEN) $(SRC_COLLEEN)
-	ld -o $(COLLEEN) $(OBJ_COLLEEN)
+	gcc -o $(COLLEEN) $(OBJ_COLLEEN) -no-pie
 	@echo "$(GREEN)$(COLLEEN) compiled$(RESET)"
+
+$(GRACE): $(OBJ_DIR) $(PROGRAM_DIR)
+	@$(NA) $(NA_FLAGS) -o $(OBJ_GRACE) $(SRC_GRACE)
+	gcc -o $(GRACE) $(OBJ_GRACE) -no-pie
+	@echo "$(GREEN)$(GRACE) compiled$(RESET)"
 
 
 test: test_colleen test_grace test_sully
 
 test_colleen: $(COLLEEN)
-	@bash $(TEST_PATH)test_colleen.sh
+	@bash $(TEST_PATH)test_colleen.sh ASM
 
 test_grace: $(GRACE)
-	@bash $(TEST_PATH)/test_grace.sh
+	@bash $(TEST_PATH)/test_grace.sh ASM
 
 test_sully: $(SULLY)
-	@bash $(TEST_PATH)/test_sully.sh
+	@bash $(TEST_PATH)/test_sully.sh ASM
 
 retest: fclean test
 
