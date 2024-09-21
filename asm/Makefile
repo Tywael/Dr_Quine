@@ -55,6 +55,10 @@ $(GRACE): $(OBJ_DIR) $(PROGRAM_DIR)
 	gcc -o $(GRACE) $(OBJ_GRACE) -no-pie
 	@echo "$(GREEN)$(GRACE) compiled$(RESET)"
 
+$(SULLY): $(OBJ_DIR) $(PROGRAM_DIR)
+	@$(NA) $(NA_FLAGS) -o $(OBJ_SULLY) $(SRC_SULLY)
+	gcc -o $(SULLY) $(OBJ_SULLY) -no-pie
+	@echo "$(GREEN)$(SULLY) compiled$(RESET)"
 
 test: test_colleen test_grace test_sully
 
