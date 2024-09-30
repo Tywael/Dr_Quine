@@ -22,7 +22,9 @@ OBJ_SULLY 	= $(addprefix $(OBJ_DIR), $(SRC_SULLY:.s=.o))
 # Compiler and flags
 
 NA			=	nasm
-NA_FLAGS	=   -f elf64
+NA_FLAGS	=   -f elf64 -g
+CC			=	gcc
+CC_FLAGS	=	-Wall -Wextra -Werror -g
 
 # Commands
 
@@ -47,17 +49,17 @@ $(OBJ_DIR) $(PROGRAM_DIR):
 
 $(COLLEEN): $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(NA) $(NA_FLAGS) -o $(OBJ_COLLEEN) $(SRC_COLLEEN)
-	gcc -o $(COLLEEN) $(OBJ_COLLEEN) -no-pie
+	@$(CC) $(CC_FLAGS) -o $(COLLEEN) $(OBJ_COLLEEN) -no-pie
 	@echo "$(GREEN)$(COLLEEN) compiled$(RESET)"
 
 $(GRACE): $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(NA) $(NA_FLAGS) -o $(OBJ_GRACE) $(SRC_GRACE)
-	gcc -o $(GRACE) $(OBJ_GRACE) -no-pie
+	@$(CC) $(CC_FLAGS) -o $(GRACE) $(OBJ_GRACE) -no-pie
 	@echo "$(GREEN)$(GRACE) compiled$(RESET)"
 
 $(SULLY): $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(NA) $(NA_FLAGS) -o $(OBJ_SULLY) $(SRC_SULLY)
-	gcc -o $(SULLY) $(OBJ_SULLY) -no-pie
+	@$(CC) $(CC_FLAGS) -o $(SULLY) $(OBJ_SULLY) -no-pie
 	@echo "$(GREEN)$(SULLY) compiled$(RESET)"
 
 test: test_colleen test_grace test_sully
@@ -66,10 +68,10 @@ test_colleen: $(COLLEEN)
 	@bash $(TEST_PATH)test_colleen.sh ASM
 
 test_grace: $(GRACE)
-	@bash $(TEST_PATH)/test_grace.sh ASM
+	@bash $(TEST_PATH)test_grace.sh ASM
 
 test_sully: $(SULLY)
-	@bash $(TEST_PATH)/test_sully.sh ASM
+	@bash $(TEST_PATH)test_sully.sh ASM
 
 retest: fclean test
 

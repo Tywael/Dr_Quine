@@ -39,10 +39,10 @@ call sprintf
 lea rdi, [rel filename]
 lea rsi, [rel mode]
 call fopen
-mov [rel f_ptr], rax
+mov [f_ptr], rax
 test rax, rax
 jz exit_program
-mov rdi, [rel f_ptr]
+mov rdi, [f_ptr]
 lea rsi, [rel src]
 mov rdx, rbx
 lea rcx, [rel src]
@@ -65,4 +65,3 @@ pop rbp
 mov rax, 60
 xor rdi, rdi
 syscall
-
