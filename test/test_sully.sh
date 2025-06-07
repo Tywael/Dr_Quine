@@ -25,7 +25,30 @@ c_ret="5c5
 < int i = 0;
 ---
 > int i = 5;"
-s_ret=""
+s_ret="21c21
+< mov rbx, 5
+---
+> mov rbx, 6
+21c21
+< mov rbx, 4
+---
+> mov rbx, 6
+21c21
+< mov rbx, 3
+---
+> mov rbx, 6
+21c21
+< mov rbx, 2
+---
+> mov rbx, 6
+21c21
+< mov rbx, 1
+---
+> mov rbx, 6
+21c21
+< mov rbx, 0
+---
+> mov rbx, 6"
 
 # Test Sully
 cd ./exe
