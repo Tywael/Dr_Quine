@@ -47,20 +47,22 @@ all: $(COLLEEN) $(GRACE) $(SULLY)
 $(OBJ_DIR) $(PROGRAM_DIR):
 	@$(MKDIR) $@
 
-$(COLLEEN): $(OBJ_DIR) $(PROGRAM_DIR)
-	@$(NA) $(NA_FLAGS) -o $(OBJ_COLLEEN) $(SRC_COLLEEN)
+$(COLLEEN): $(OBJ_COLLEEN) | $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(CC) $(CC_FLAGS) -o $(COLLEEN) $(OBJ_COLLEEN) -no-pie
 	@echo "$(GREEN)$(COLLEEN) compiled$(RESET)"
 
-$(GRACE): $(OBJ_DIR) $(PROGRAM_DIR)
-	@$(NA) $(NA_FLAGS) -o $(OBJ_GRACE) $(SRC_GRACE)
+$(GRACE): $(OBJ_GRACE) | $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(CC) $(CC_FLAGS) -o $(GRACE) $(OBJ_GRACE) -no-pie
 	@echo "$(GREEN)$(GRACE) compiled$(RESET)"
 
-$(SULLY): $(OBJ_DIR) $(PROGRAM_DIR)
-	@$(NA) $(NA_FLAGS) -o $(OBJ_SULLY) $(SRC_SULLY)
+$(SULLY): $(OBJ_SULLY) | $(OBJ_DIR) $(PROGRAM_DIR)
 	@$(CC) $(CC_FLAGS) -o $(SULLY) $(OBJ_SULLY) -no-pie
 	@echo "$(GREEN)$(SULLY) compiled$(RESET)"
+
+$(OBJ_DIR)%.o: $(SRC_PATH)%.s | $(OBJ_DIR) $(PROGRAM_DIR)
+	@$(NA) $(NA_FLAGS) -o $@ $<
+	@echo "$(CYAN)Compiling $<$(RESET)"
+
 
 test: test_colleen test_grace test_sully
 

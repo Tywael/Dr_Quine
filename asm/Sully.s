@@ -18,7 +18,7 @@ global main
 main:
 push rbp
 mov rbp, rsp
-mov rbx, 6
+mov rbx, 5
 lea rdi, [rel self]
 lea rsi, [rel basename]
 call strcmp

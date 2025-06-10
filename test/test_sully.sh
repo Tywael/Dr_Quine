@@ -26,29 +26,25 @@ c_ret="5c5
 ---
 > int i = 5;"
 s_ret="21c21
-< mov rbx, 5
----
-> mov rbx, 6
-21c21
 < mov rbx, 4
 ---
-> mov rbx, 6
+> mov rbx, 5
 21c21
 < mov rbx, 3
 ---
-> mov rbx, 6
+> mov rbx, 5
 21c21
 < mov rbx, 2
 ---
-> mov rbx, 6
+> mov rbx, 5
 21c21
 < mov rbx, 1
 ---
-> mov rbx, 6
+> mov rbx, 5
 21c21
 < mov rbx, 0
 ---
-> mov rbx, 6"
+> mov rbx, 5"
 
 # Test Sully
 cd ./exe
@@ -56,7 +52,7 @@ rm -f ./tmp_Sully
 ./Sully
 
 echo  -n "Test Sully:     "
-for i in {5..0}; do
+for i in {4..0}; do
     diff ./Sully_$i.$language ../Sully.$language >> ./tmp_Sully
 done
 if [[ $language = "s" ]]; then
